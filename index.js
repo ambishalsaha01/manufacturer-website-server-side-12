@@ -42,6 +42,21 @@ async function run() {
             const reviews = await cursor.toArray();
             res.send(reviews);
         })
+
+        // Put Inventory
+        app.put('/part/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedStock = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updatedDoc = {
+                $set: {
+                    quantity: updatedStock.totalQuantity,
+                }
+            };
+            const result = await partCollection.updateOne(filter, updatedDoc, options);
+            res.send(result);
+        })
     }
     finally {
 
