@@ -43,7 +43,7 @@ async function run() {
             res.send(reviews);
         })
 
-        // Put Inventory
+        // Put part quantit
         app.put('/part/:id', async (req, res) => {
             const id = req.params.id;
             const updatedStock = req.body;
@@ -51,7 +51,7 @@ async function run() {
             const options = { upsert: true };
             const updatedDoc = {
                 $set: {
-                    quantity: updatedStock.totalQuantity,
+                    order_quantity: updatedStock.totalQuantity,
                 }
             };
             const result = await partCollection.updateOne(filter, updatedDoc, options);
