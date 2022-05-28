@@ -18,6 +18,7 @@ async function run() {
         await client.connect();
         const partCollection = client.db('car_manufacturer').collection('parts');
         const reviewCollection = client.db('car_manufacturer').collection('reviews');
+        const socialCollection = client.db('car_manufacturer').collection('social');
 
         // get part data from mongodb
         app.get('/part', async (req, res) => {
@@ -47,6 +48,13 @@ async function run() {
         app.post('/review', async (req, res) => {
             const newReview = req.body;
             const result = await reviewCollection.insertOne(newReview)
+            res.send(result)
+        })
+
+        // Post social info in database
+        app.post('/profile', async (req, res) => {
+            const socialInfo = req.body;
+            const result = await socialCollection.insertOne(socialInfo)
             res.send(result)
         })
 
